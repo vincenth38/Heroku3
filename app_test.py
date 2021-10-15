@@ -46,7 +46,6 @@ app.layout = html.Div([
 
 ])
 def clean_data(df):
-
     df['Planned Units'] = df['Planned Units'].str.replace(r'h', '')
     df['Remaining Units'] = df['Remaining Units'].str.replace(r'h', '')
     df['Planned Units'] = pd.to_numeric(df['Planned Units'])
@@ -75,7 +74,7 @@ def clean_data(df):
     df_FQ = df_FM.groupby(pd.PeriodIndex(df_FM.columns, freq='Q-SEP'), axis=1).sum()
     df_FQ_FTE = df_FQ / (145 * 3)
 
-#    df_FQ_FTE
+    #    df_FQ_FTE
     df_FY = df_FM.groupby(pd.PeriodIndex(df_FM.columns, freq='A-SEP'), axis=1).sum()
     df_FY_FTE = df_FY / (1740)
 
@@ -116,6 +115,7 @@ def clean_data(df):
     df = df[['L3'] + ['L4'] + ['L5'] + [col for col in df.columns if col not in ['L3', 'L4', 'L5']]]
     df.drop('WBS Path', axis=1, inplace=True)
 
+
     # EXPORT THE 1.03 DATA
 
     #df[(df['L3'] == '1.03')].head()
@@ -127,7 +127,6 @@ def clean_data(df):
 
 def parse_contents(contents, filename, date):
     content_type, content_string = contents.split(',')
-
     decoded = base64.b64decode(content_string)
     try:
         if 'csv' in filename:
@@ -138,7 +137,6 @@ def parse_contents(contents, filename, date):
         elif 'xls' in filename:
             # Assume that the user uploaded an excel file
             df = pd.read_excel(io.BytesIO(decoded))
- #      df = clean_data(df)
  #      df = df.head()
     except Exception as e:
         print(e)
