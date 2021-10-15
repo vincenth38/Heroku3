@@ -3,11 +3,12 @@ from dash.dependencies import Input, Output, State
 from dash import dcc
 from dash import html
 from dash import dash_table
-
 import pandas as pd
-
+import base64
+import io
+import datetime
+########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 #app.title=tabtitle
