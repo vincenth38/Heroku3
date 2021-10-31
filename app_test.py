@@ -8,23 +8,26 @@ import base64
 import io
 import datetime
 from pathlib import Path
+from whitenoise import WhiteNoise
 import dash_uploader as du
 import uuid
 
 import os
 import psycopg2
 
-DATABASE_URL = os.environ['DATABASE_URL']
+# DATABASE_URL = os.environ['DATABASE_URL']
 
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+# conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 ########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
+server.wsgi_app = WhiteNoise(server.wsgi_app, root='static/')
+# app.wsgi_app = WhiteNoise(app.wsgi_app, root='static/')
 #app.title=tabtitle
 # 1) configure the upload folder
-du.configure_upload(app, r"C:\tmp\Uploads")
+du.configure_upload(app, r"static/")
 
 app.layout = html.Div([
     dcc.Upload(
